@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Send, Loader2, MessageSquare, Zap, LockIcon, ArrowRight } from "lucide-react";
+import { Send, Loader2, MessageSquare, Zap, LockIcon, ArrowRight, Clock } from "lucide-react";
 import { io } from "socket.io-client";
 import { Navigate, useNavigate } from "react-router";
 import { usePrivy } from '@privy-io/react-auth';
