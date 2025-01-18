@@ -21,7 +21,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Socials</h4>
             <ul className="space-y-2">
-              <li>
+              {/* <li>
                 <Link
                   to="#"
                   className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center group"
@@ -29,7 +29,7 @@ const Footer = () => {
                   Twitter
                   <MoveRight className="h-4 w-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="#"
