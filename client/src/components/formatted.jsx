@@ -71,11 +71,16 @@ const FormattedChatOutput = ({ content = "" }) => {
   const parseContent = (content) => {
     const cleanedContent = cleanMessage(content);
     
-    // If there's no content after cleaning, return empty array
     if (!cleanedContent) return [];
     
+    // Find and wrap the planning section in bold tags
+    const formattedContent = cleanedContent.replace(
+      /(To answer this request we have assembled the following team:[\s\S]*?)(?=\n\n(?!•)|$)/,
+      '<strong>$1</strong>'
+    );
+    
     // Split into meaningful chunks while preserving code blocks
-    const chunks = cleanedContent.split(/\n\n(?=[A-Za-z•])/);
+    const chunks = formattedContent.split(/\n\n(?=[A-Za-z•])/);
     
     return chunks.map(chunk => {
       // Handle code blocks specially
@@ -90,9 +95,9 @@ const FormattedChatOutput = ({ content = "" }) => {
         '<code class="bg-gray-100 text-gray-800 px-1 rounded">$1</code>'
       );
       
-      // Convert newlines to <br/> but preserve code blocks
+      // Convert newlines to <br/> but preserve code blocks and lists
       formattedText = formattedText.replace(
-        /(?<!<pre[\s\S]*?>[\s\S]*?)\n(?![\s\S]*?<\/pre>)/g,
+        /(?<!<pre[\s\S]*?>[\s\S]*?)\n(?![\s\S]*?<\/pre>)(?!•)/g,
         "<br />"
       );
 
