@@ -167,7 +167,7 @@ function Landing() {
                       value={userInput}
                       onChange={(e) => setUserInput(e.target.value)}
                       placeholder={mode === "single" ? "Describe your task..." : "Type your message..."}
-                      className="flex-1 px-4 py-2 bg-white rounded-l-xl border border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all text-gray-900 placeholder-gray-500"
+                      className="flex-1 px-4 py-4 bg-white rounded-l-xl border border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all text-gray-900 placeholder-gray-500"
                     />
                     <div className="flex items-center bg-white border border-l-0 border-gray-200 rounded-r-xl px-3 py-2">
                       <div className="text-xs text-gray-500 flex items-center gap-1 mr-2">
