@@ -1,28 +1,110 @@
 import React, { useState, useEffect } from "react";
-import { Send, Loader2, MessageSquare, Zap, LockIcon, ArrowRight, Clock } from "lucide-react";
+import { Send, Loader2, MessageSquare, Zap, LockIcon, ArrowRight, Clock, X } from "lucide-react";
 import { io } from "socket.io-client";
 import { Navigate, useNavigate } from "react-router";
 import { usePrivy } from '@privy-io/react-auth';
 import ChatResponseUI from "../components/chatui";
 import Navbar from "../components/navbar";
 
+const FirstTimePopup = ({ isOpen, onClose }) => {
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsVisible(true);
+      setTimeout(() => setIsAnimating(true), 10);
+    } else {
+      setIsAnimating(false);
+      setTimeout(() => setIsVisible(false), 300); // Match transition duration
+    }
+  }, [isOpen]);
+
+  if (!isVisible) return null;
+
+  return (
+    <div className={`fixed inset-0 flex items-center justify-center z-50 transition-all duration-300 ${
+      isAnimating ? 'bg-black/50 backdrop-blur-sm' : 'bg-black/0 backdrop-blur-none'
+    }`}>
+      <div className={`transform transition-all duration-300 w-full max-w-md mx-4 ${
+        isAnimating ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+      }`}>
+        <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden">
+          {/* Decorative gradient top bar */}
+          <div className="h-2 bg-gradient-to-r from-cyan-500 to-blue-500" />
+          
+          {/* Close button with pulse effect */}
+          <button 
+            onClick={onClose}
+            className="absolute right-4 top-4 p-2 rounded-full hover:bg-gray-100 transition-colors group"
+          >
+            <X className="w-5 h-5 text-gray-500 group-hover:text-gray-700" />
+            <span className="absolute inset-0 rounded-full animate-pulse bg-gray-100 opacity-0 group-hover:opacity-100" />
+          </button>
+          
+          <div className="p-8">
+            <div className="flex flex-col items-center text-center">
+              {/* Logo with subtle hover effect */}
+              <div className="relative group mb-6">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+                <img 
+                  src="/logo.png" 
+                  alt="SwiftNet Logo" 
+                  className="w-20 h-20 relative transform transition-transform duration-300 group-hover:scale-105" 
+                />
+              </div>
+              
+              {/* Animated title */}
+              <h2 className="text-3xl font-bold mb-3 bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent transform transition-all duration-300 hover:scale-105">
+                Welcome to SwiftNet
+              </h2>
+              
+              {/* Animated divider */}
+              <div className="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full mb-6 transform transition-all duration-300 hover:scale-x-150" />
+              
+              {/* Content with better typography */}
+              <p className="text-gray-600 mb-8 leading-relaxed max-w-sm">
+                Please note that SwiftNet is currently in 
+                <span className="font-medium text-cyan-600"> experimental stage</span>. 
+                We're constantly improving our service to provide you with the 
+                <span className="font-medium text-blue-600"> best experience</span>.
+              </p>
+              
+              {/* Enhanced button with animation */}
+              <button
+                onClick={onClose}
+                className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl px-8 py-3 font-medium transition-all duration-300 hover:shadow-lg hover:scale-105"
+              >
+                <span className="relative z-10">I understand</span>
+                <div className="absolute inset-0 bg-white transform translate-y-full transition-transform duration-300 group-hover:translate-y-0 opacity-20" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const suggestions = [
   {
     text: "Write a python program to add n natural numbers",
+    time: "15-20 seconds"
   },
   {
     text: "Generate unit tests for my authentication service",
+    time: "15-20 seconds"
   },
   {
     text: "Explain my python code",
+    time: "15-20 seconds"
   },
   {
     text: "Help me debug my React useEffect hook",
+    time: "15-20 seconds"
   }
 ];
 
-// const socket = io("http://localhost:5000");
 const socket = io("https://swiftnet.onrender.com");
 
 function ModeSwitch({ mode, onModeChange }) {
@@ -62,8 +144,22 @@ function Landing() {
   const [messages, setMessages] = useState([]);
   const [estimatedTime, setEstimatedTime] = useState("15-20 seconds");
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [showFirstTimePopup, setShowFirstTimePopup] = useState(false);
   const { ready, authenticated } = usePrivy();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if it's the first time visit
+    const hasVisited = localStorage.getItem("hasVisitedSwiftNet");
+    if (!hasVisited) {
+      setShowFirstTimePopup(true);
+    }
+  }, []);
+
+  const handleClosePopup = () => {
+    localStorage.setItem("hasVisitedSwiftNet", "true");
+    setShowFirstTimePopup(false);
+  };
 
   useEffect(() => {
     socket.on("connect", () => console.info("Connected to WebSocket server:", socket.id));
@@ -101,7 +197,6 @@ function Landing() {
 
   const handleSuggestionClick = (suggestion) => {
     setUserInput(suggestion.text);
-    setEstimatedTime(suggestion.time);
     setShowSuggestions(false);
     // Automatically submit the suggestion
     socket.emit("process_task", { task: suggestion.text, humanInteraction: mode });
@@ -123,6 +218,7 @@ function Landing() {
 
   return (
     <div className="min-h-screen bg-white">
+      <FirstTimePopup isOpen={showFirstTimePopup} onClose={handleClosePopup} />
       <Navbar />
       <div className="container mx-auto px-4">
         <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center">
