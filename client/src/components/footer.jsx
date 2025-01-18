@@ -17,21 +17,6 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Socials</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  to="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center group"
-                >
-                  Dexscreener
-                  <MoveRight className="h-4 w-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Link>
-              </li>
-            </ul>
-          </div>
 
           {/* Company */}
           <div>
@@ -46,6 +31,14 @@ const Footer = () => {
                   <MoveRight className="h-4 w-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/privacy-policy"
+                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -55,14 +48,6 @@ const Footer = () => {
             <p className="text-gray-600 dark:text-gray-400">
               © 2025 SwiftNet. All rights reserved.
             </p>
-            <div className="flex space-x-6">
-              <Link
-                to="/privacy-policy"
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-              >
-                Privacy Policy
-              </Link>
-            </div>
           </div>
         </div>
       </div>
