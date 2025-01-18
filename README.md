@@ -1,6 +1,6 @@
 # SwiftNet: Your AI Dream Team for the Digital World
 
-![Swiftnet_Banner](https://github.com/wibi16/swiftnet/imgs/Swiftnet_Banner.png)
+![Swiftnet_Banner](https://github.com/wibi16/swiftnet/blob/main/imgs/Swiftnet_Banner.png?raw=true)
 
 ## Table of Contents
 1. [Introduction](#introduction)
