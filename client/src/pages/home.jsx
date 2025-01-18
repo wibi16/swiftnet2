@@ -141,7 +141,7 @@ const Home = () => {
                         variants={fadeInUp}
                         className="text-center text-xl mx-auto my-8 w-full text-gray-700 dark:text-gray-300 leading-relaxed max-w-5xl"
                     >
-                        Dedicated deck of agents specialized to solve task more effectively than anyone. Agents not only limited to chats elevate web surfing, code excution and many more in a single task.
+                        Dedicated deck of agents specialized to solve tasks more effectively then any human. Agents aren't only limited to chats and instead can access the web, write and execute code execution and much more in a series of tasks.
                     </motion.p>
                 </div>
             </div>
