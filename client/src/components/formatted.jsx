@@ -73,9 +73,9 @@ const FormattedChatOutput = ({ content = "" }) => {
     
     if (!cleanedContent) return [];
     
-    // Find and wrap the planning section in bold tags
+    // Find and wrap the planning section in bold tags, stopping at the specific text
     const formattedContent = cleanedContent.replace(
-      /(To answer this request we have assembled the following team:[\s\S]*?)(?=\n\n(?!•)|$)/,
+      /(To answer this request we have assembled the following team:[\s\S]*?provided to it quoted in ```sh code blocks)(?=\))/,
       '<strong>$1</strong>'
     );
     
