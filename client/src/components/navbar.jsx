@@ -92,6 +92,21 @@ const Navbar = () => {
                   />
                 </Button>
               </Link>
+
+              <Link
+                to="/"
+                className="flex flex-col items-center hover:scale-110 transition-all duration-300"
+              >
+                <Button variant="icon" className="flex items-center justify-center">
+                  <img
+                    width="30"
+                    height="30"
+                    src="/dex.png"
+                    alt="Docs"
+                    className="opacity-75 rounded-md"
+                  />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
