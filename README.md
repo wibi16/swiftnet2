@@ -73,7 +73,7 @@ python examples/example.py --logs_dir ./logs --save_screenshots
 ```
 
 ## Configuration
-For detailed setup instructions, refer to the configuration guide in the [documentation](https://kiwis-organization-2.gitbook.io/swiftnet).
+For detailed setup instructions, refer to the configuration guide in the [documentation](http://docs.swiftnet.ai/).
 
 ## Acknowledgments
 We appreciate contributions from the AI and open-source community. Your support helps improve SwiftNet's capabilities and reach.

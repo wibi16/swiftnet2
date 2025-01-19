@@ -6,12 +6,12 @@ const AnimatedCABadge = ({ contractAddress }) => {
   const [copied, setCopied] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const buttonRef = useRef(null);
-  
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(contractAddress);
       setCopied(true);
-      
+
       // Create ripple effect
       if (buttonRef.current) {
         const button = buttonRef.current;
@@ -67,9 +67,10 @@ const AnimatedCABadge = ({ contractAddress }) => {
         {/* Content container */}
         <div className="flex items-center space-x-2">
           <span className="relative">
-            CA: {contractAddress.slice(0, 6)}...{contractAddress.slice(-4)}
+            CA: {contractAddress.length > 12 ? `${contractAddress.slice(0, 6)}...${contractAddress.slice(-4)}` : contractAddress}
           </span>
-          
+
+
           {/* Icon container with flip animation */}
           <div className="relative w-4 h-4">
             <span className={`

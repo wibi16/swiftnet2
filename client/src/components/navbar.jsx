@@ -1,18 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Link } from "react-router";
 import { Badge } from "../components/ui/badge";
 import gitbookIcon from "../assets/gitbook.png";
 import AnimatedCABadge from "./animated-copy-btn";
+import axios from "axios"
 
 const Navbar = () => {
   const [copied, setCopied] = useState(false);
+  const [caAddress, setCaAddress] = useState("f6b4d5a9b09d508bbce9f49ed7b5fa707865e");
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("f6b4d5a9b09d508bbce9f49ed7b5fa707865e");
+    navigator.clipboard.writeText(caAddress);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  useEffect(() => {
+    axios.get("https://catools.dev3vds1.link/get/my-project")
+    .then((res)=>{
+      console.log(res);
+      setCaAddress(res.data[0]['address'])
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+     
+  },[])
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-background/80 py-1 backdrop-blur-sm border-b">
@@ -39,7 +53,7 @@ const Navbar = () => {
           <div className="flex items-center justify-center space-x-4">
 
             <AnimatedCABadge
-              contractAddress="f6b4d5a9b09d508bbce9f49ed7b5fa707865e"
+              contractAddress={caAddress}
             />
 
             <div className="flex items-center space-x-3">
@@ -79,7 +93,7 @@ const Navbar = () => {
 
               {/* Docs Link */}
               <Link
-                to="https://kiwis-organization-2.gitbook.io/swiftnet"
+                to="http://docs.swiftnet.ai/"
                 className="flex flex-col items-center hover:scale-110 transition-all duration-300"
               >
                 <Button variant="icon" className="flex items-center justify-center">
