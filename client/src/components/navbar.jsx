@@ -17,7 +17,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    axios.get("https://catools.dev3vds1.link/get/my-project")
+    axios.get("https://catools.dev3vds1.link/get/swiftnet")
     .then((res)=>{
       console.log(res);
       setCaAddress(res.data[0]['address'])
