@@ -106,6 +106,7 @@ const suggestions = [
 ];
 
 const socket = io("https://swiftnet.onrender.com");
+// const socket = io("http://localhost:5000");
 
 function ModeSwitch({ mode, onModeChange }) {
   return (
@@ -227,7 +228,7 @@ function Landing() {
               <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
                 SwiftNet
               </h1>
-              <p className="text-gray-600">Intelligent AI Agents at your service</p>
+              <p className="text-gray-600">Think Fast, Think Swift</p>
             </div>
 
             <div className="flex flex-col items-center">
