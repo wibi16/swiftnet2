@@ -86,7 +86,8 @@ const FirstTimePopup = ({ isOpen, onClose }) => {
   );
 };
 
-const suggestions = [
+// Separate suggestion lists for each mode
+const singleModeSuggestions = [
   {
     text: "Write a python program to add n natural numbers",
     time: "15-20 seconds"
@@ -96,11 +97,30 @@ const suggestions = [
     time: "15-20 seconds"
   },
   {
-    text: "Explain my python code",
+    text: "Create an API endpoint for user registration",
     time: "15-20 seconds"
   },
   {
-    text: "Help me debug my React useEffect hook",
+    text: "Debug my React useEffect hook",
+    time: "15-20 seconds"
+  }
+];
+
+const conversationalModeSuggestions = [
+  {
+    text: "Can you help me understand how blockchain works?",
+    time: "15-20 seconds"
+  },
+  {
+    text: "Let's brainstorm features for my new app idea",
+    time: "15-20 seconds"
+  },
+  {
+    text: "I need help planning my software architecture",
+    time: "15-20 seconds"
+  },
+  {
+    text: "Guide me through learning React hooks",
     time: "15-20 seconds"
   }
 ];
@@ -126,7 +146,7 @@ function ModeSwitch({ mode, onModeChange }) {
         onClick={() => onModeChange("conversational")}
         className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${
           mode === "conversational"
-            ? "bg-indigo-500 text-white shadow-lg"
+            ? "bg-cyan-500 text-white shadow-lg"
             : "text-gray-600 hover:text-gray-900"
         }`}
       >
@@ -149,8 +169,20 @@ function Landing() {
   const { ready, authenticated } = usePrivy();
   const navigate = useNavigate();
 
+  // Get current suggestions based on mode
+  const getCurrentSuggestions = () => {
+    return mode === "single" ? singleModeSuggestions : conversationalModeSuggestions;
+  };
+
+  // Handle mode change
+  const handleModeChange = (newMode) => {
+    setMode(newMode);
+    setShowSuggestions(true); // Show suggestions again when mode changes
+    setMessages([]); // Clear previous messages
+    setResponse(""); // Clear previous response
+  };
+
   useEffect(() => {
-    // Check if it's the first time visit
     const hasVisited = localStorage.getItem("hasVisitedSwiftNet");
     if (!hasVisited) {
       setShowFirstTimePopup(true);
@@ -199,7 +231,6 @@ function Landing() {
   const handleSuggestionClick = (suggestion) => {
     setUserInput(suggestion.text);
     setShowSuggestions(false);
-    // Automatically submit the suggestion
     socket.emit("process_task", { task: suggestion.text, humanInteraction: mode });
     setIsProcessing(true);
     setResponse("");
@@ -232,11 +263,11 @@ function Landing() {
             </div>
 
             <div className="flex flex-col items-center">
-              <ModeSwitch mode={mode} onModeChange={setMode} />
+              <ModeSwitch mode={mode} onModeChange={handleModeChange} />
 
               {showSuggestions && (
                 <div className="w-full grid grid-cols-2 gap-4 mb-6">
-                  {suggestions.map((suggestion, index) => (
+                  {getCurrentSuggestions().map((suggestion, index) => (
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(suggestion)}
